@@ -10,6 +10,18 @@ const sequelize = new Sequelize(
     }
 )
 
+async function syncDb(sequelize, force = false){
+    try {
+        if (force)
+            await sequelize.sync({force: true})
+        else
+            await sequelize.sync()
+    } catch (err){
+        console.log(err)
+    }
+}
+
 module.exports = {
-    sequelize
+    sequelize,
+    syncDb
 }

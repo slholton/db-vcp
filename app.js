@@ -1,31 +1,24 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const { sequelize } = require('./db')
-const { DefineUser } = require('./models/User')
+const port = 3000
 
 ;(async () => {
-    try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-    } catch (error) {
-    console.error('Unable to connect to the database:', error);
-    }
-    DefineUser(sequelize)
+    app.use(express.json())
 
-    sequelize.sync({force: true})
+    // Reads and Deletes Videos & Playlists
+    const auth = require('./controllers/Auth') 
+    app.use("/auth", auth)
+
+    // Creates Videos & Playlists
+    const insert = require('./controllers/Insert') 
+    app.use("/insert", insert)
+
+    // Updates Videos & Playlists
+    const update = require('./controllers/Update') 
+    app.use("/update", update)
+
+    app.listen(port, () => {
+        console.log(`Example app listening at http://localhost:${port}`)
+    })
 })()
-
-const port = 3000
-const auth = require('./controllers/Auth');
-app.use("/", auth)
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
-
-// DB Set Up BEGIN
-// ;(async () => {
-//     await sequelize.sync({force: true});
-// })()
-// DB Set Up END
