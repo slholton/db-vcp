@@ -1,24 +1,25 @@
 require('dotenv').config()
-const express = require('express')
-const app = express()
+const Express = require('express')
+const app = Express()
 const port = 3000
 
 ;(async () => {
-    app.use(express.json())
+    app.use(Express.json())
 
-    // Reads and Deletes Videos & Playlists
+    // CRUD for User
     const auth = require('./controllers/Auth') 
-    app.use("/auth", auth)
+    app.use("/user", auth)
 
-    // Creates Videos & Playlists
-    const insert = require('./controllers/Insert') 
-    app.use("/insert", insert)
+    // CRUD for Videos
+    const video = require('./controllers/VideoController') 
+    app.use("/videos", video)
 
-    // Updates Videos & Playlists
-    const update = require('./controllers/Update') 
-    app.use("/update", update)
+    // CRUD for Playlists
+    const playlist = require('./controllers/PlaylistController') 
+    app.use("/playlists", playlist)
 
     app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`)
     })
+
 })()

@@ -18,10 +18,10 @@ Playlist.belongsTo(User)
 User.hasMany(Video)
 Video.belongsTo(User)
 
-Video.belongsToMany(Playlist, {through: PlaylistVideos});
-Playlist.belongsToMany(Video, {through: PlaylistVideos});
+Video.belongsToMany(Playlist, {through: 'PlaylistVideos'});
+Playlist.belongsToMany(Video, {through: 'PlaylistVideos'});
 
 // Sync
-syncDb(sequelize, true)
+syncDb(sequelize, { alter: true })
 
-module.exports = { User, Insert, Update }
+module.exports = { User, Video, Playlist }
