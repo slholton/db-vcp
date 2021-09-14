@@ -1,5 +1,4 @@
 module.exports = (sequelize, DataTypes) => {
-
     const Video = sequelize.define("Video", {
         publishDate: {
             type: DataTypes.DATE
