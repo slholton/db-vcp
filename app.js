@@ -1,14 +1,14 @@
 require('dotenv').config()
-const Express = require('express')
-const app = Express()
+const express = require('express')
+const app = express()
 const port = 3000
 
 ;(async () => {
-    app.use(Express.json())
+    app.use(express.json())
 
     // CRUD for User
     const auth = require('./controllers/Auth') 
-    app.use("/user", auth)
+    app.use("/auth", auth)
 
     // CRUD for Videos
     const video = require('./controllers/VideoController') 
@@ -19,7 +19,6 @@ const port = 3000
     app.use("/playlists", playlist)
 
     app.listen(port, () => {
-        console.log(`Example app listening at http://localhost:${port}`)
+        console.log(`App is listening on http://localhost:${port}`)
     })
-
 })()

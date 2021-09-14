@@ -1,5 +1,5 @@
-let express = require('express')  // unsure of this in final code?
-const router = express.Router()
+let express = require('express')  
+let router = express.Router()
 const { User } = require("../models")
 const { UniqueConstraintError } = require("sequelize/lib/errors")
 const jwt = require("jsonwebtoken")
