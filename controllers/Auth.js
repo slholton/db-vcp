@@ -1,7 +1,5 @@
-let express = require('express')
-let router = express.Router()
-const { Users } = require("../models")
-
+const router = require("express").Router()
+const { User } = require("../models")
 const { UniqueConstraintError } = require("sequelize/lib/errors")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
@@ -9,52 +7,38 @@ const bcrypt = require("bcryptjs")
 // Registration included fname to personalize greeting
 router.post("/register", async (req, res) => {
     let { fname, email, password } = req.body.user;
-    let message
-
     try {
-        const user = await Users.create({
+        const Person = await User.create({
             fname,
             email,
-            password: bcrypt.hashSync(password, 12),
+            password: bcrypt.hashSync(password, 13),
         });
 
-        let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
+        let token = jwt.sign({ id: Person.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
 
-        message = {
-            msg: 'User Created',
-            // user,
+        res.status(201).json({
+            message: "User successfully registered!",
+            user: User,
             sessionToken: token
-
-        }
-
-        // res.status(201).json({
-        //     message: "User successfully registered!",
-        //     user: User,
-        //     sessionToken: token
-        // });
-
+        });
     } catch (err) {
         if (err instanceof UniqueConstraintError) {
-            message = {
-                msg: 'Failed to Create User'
-            }
-        //     res.status(409).json({
-        //         message: "Email already in use",
-        //     });
-        // } else {
-        //     res.status(500).json({
-        //         message: "Failed to register user",
-        //     })
+            res.status(409).json({
+            message: 'Email already in use',
+            });
+        } else {
+            res.status(500).json({
+                message: "Failed to register user",
+            })
         }
     }
-    res.json(message)
 })
 
 router.post("/login", async (req, res) => {
     let { email, password } = req.body.user;
 
     try {
-        const loginUser = await Users.findOne({
+        const loginUser = await User.findOne({
             where: {
                 email: email,
             }
