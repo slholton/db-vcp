@@ -1,16 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
     const Playlist = sequelize.define("Playlist", {
         publishDate: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            allowNull: false
         },
         title: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
         },
         description: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         status: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING, 
+            allowNull: false
         }
     })
     return Playlist

@@ -1,21 +1,21 @@
 require('dotenv').config()
-const express = require('express')
-const app = express()
+const Express = require('express')
+const app = Express()
 const port = 3000
 
 ;(async () => {
-    app.use(express.json())
+    app.use(Express.json())
 
     // CRUD for User
     const auth = require('./controllers/Auth') 
-    app.use("/auth", auth)
+    app.use("/user", auth)
 
     // CRUD for Videos
-    const video = require('./controllers/VideoController') 
+    const video = require('./controllers/Video') 
     app.use("/videos", video)
 
     // CRUD for Playlists
-    const playlist = require('./controllers/PlaylistController') 
+    const playlist = require('./controllers/Playlist') 
     app.use("/playlists", playlist)
 
     app.listen(port, () => {
