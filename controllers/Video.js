@@ -39,13 +39,13 @@ router.post("/insert", validateJWT, async (req, res) => {
 
 router.put("/update/:entryId", validateJWT, async (req, res) => {
     const { publishDate, title, description, categoryId, playlist } = req.body.video;
-    const videoId = req.params.entryId;
-    const userId = req.user.id;
+    const videoId = req.params.id;
+    // const userId = req.user;
     
     const query = {
         where: {
             id: videoId,
-            owner: userId
+            // owner: userId
         }
     }
     
@@ -66,14 +66,12 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
 });
 
 router.delete("/delete/:id", validateJWT, async (req, res) => {
-    const ownerId = req.user.id;
     const videoId = req.params.id;
 
     try {
         const query = {
             where: {
-                id: videoId,
-                owner: ownerId
+                id: videoId
             }
         };
 
@@ -82,6 +80,6 @@ router.delete("/delete/:id", validateJWT, async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err});
     }
-})
+});
 
 module.exports = router;

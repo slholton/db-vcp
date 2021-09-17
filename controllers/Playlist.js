@@ -64,22 +64,20 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
 });
 
 router.delete("/delete/:id", validateJWT, async (req, res) => {
-    const ownerId = req.user.id;
     const playlistId = req.params.id;
 
     try {
         const query = {
             where: {
-                id: playlistId,
-                owner: ownerId
+                id: playlistId
             }
         };
 
-        await Playlist.destroy(query);
-        res.status(200).json({ message: "Playlist Entry Removed" });
+        await Video.destroy(query);
+        res.status(200).json({ message: "Playlist Removed" });
     } catch (err) {
-        res.status(500).json({ error: err});
+        res.status(500).json({ error: err });
     }
-})
+});
 
 module.exports = router;
