@@ -39,12 +39,10 @@ router.post("/insert", validateJWT, async (req, res) => {
 router.put("/update/:entryId", validateJWT, async (req, res) => {
     const { publishDate, title, description, status } = req.body.playlist;
     const playlistId = req.params.entryId;
-    const userId = req.user.id;
     
     const query = {
         where: {
             id: playlistId,
-            owner: userId
         }
     }
     

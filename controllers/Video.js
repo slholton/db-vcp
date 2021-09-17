@@ -39,13 +39,11 @@ router.post("/insert", validateJWT, async (req, res) => {
 
 router.put("/update/:entryId", validateJWT, async (req, res) => {
     const { publishDate, title, description, categoryId, playlist } = req.body.video;
-    const videoId = req.params.id;
-    // const userId = req.user;
+    const videoId = req.params.entryId;
     
     const query = {
         where: {
             id: videoId,
-            // owner: userId
         }
     }
     
