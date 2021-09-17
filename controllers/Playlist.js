@@ -39,10 +39,12 @@ router.post("/insert", validateJWT, async (req, res) => {
 router.put("/update/:entryId", validateJWT, async (req, res) => {
     const { publishDate, title, description, status } = req.body.playlist;
     const playlistId = req.params.entryId;
+    const { id } = req.user
     
     const query = {
         where: {
             id: playlistId,
+            owner: id
         }
     }
     
@@ -71,7 +73,7 @@ router.delete("/delete/:id", validateJWT, async (req, res) => {
             }
         };
 
-        await Video.destroy(query);
+        await Playlist.destroy(query);
         res.status(200).json({ message: "Playlist Removed" });
     } catch (err) {
         res.status(500).json({ error: err });
