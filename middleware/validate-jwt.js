@@ -20,6 +20,7 @@ const validateJWT = async (req, res, next) => {
         : undefined;
 
         if (payload) {
+            console.log(payload)
             let foundUser = await User.findOne({ where: { id: payload.id } });
 
             if (foundUser) {

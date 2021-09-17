@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         playlist: {
             type: DataTypes.STRING
+        },
+        owner: {
+            type: DataTypes.INTEGER
         }
     })
     return Video

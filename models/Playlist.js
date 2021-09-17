@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         status: {
             type: DataTypes.STRING, 
             allowNull: false
+        },
+        owner: {
+            type: DataTypes.INTEGER
         }
     })
     return Playlist

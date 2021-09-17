@@ -3,15 +3,6 @@ const router = Express.Router();
 let validateJWT = require("../middleware/validate-jwt");
 const { Playlist } = require("../models");
 
-router.get('/', async (req, res) => {
-    try {
-        const entries = await Playlist.findAll();
-        res.status(200).json(entries);
-    } catch (err) {
-        res.status(500).json({ error: err });
-    }
-});
-
 router.get("/mine", validateJWT, async (req, res) => {
     const { id } = req.user;
     try {
@@ -45,19 +36,7 @@ router.post("/insert", validateJWT, async (req, res) => {
     Playlist.create(playlistEntry)
 })
 
-router.get("/:title", async (req, res) =>{
-    const { title } = req.params;
-    try {
-        const results = await Playlist.findAll({
-            where: { title: title }
-        });
-        res.status(200).json(results);
-    } catch (err) {
-        res.status(500).json({ error: err })
-    }
-})
-
-router.put("/update:entryId", validateJWT, async (req, res) => {
+router.put("/update/:entryId", validateJWT, async (req, res) => {
     const { publishDate, title, description, status } = req.body.playlist;
     const playlistId = req.params.entryId;
     const userId = req.user.id;
