@@ -65,11 +65,13 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
 
 router.delete("/delete/:id", validateJWT, async (req, res) => {
     const playlistId = req.params.id;
+    const user = req.user.id
 
     try {
         const query = {
             where: {
-                id: playlistId
+                id: playlistId,
+                owner: user
             }
         };
 
